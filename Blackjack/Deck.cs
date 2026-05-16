@@ -1,15 +1,21 @@
-﻿namespace Blackjack
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Blackjack
 {
     public class Deck
     {
-        private readonly List<Card> _cards = new List<Card>();
-        private static readonly Random _randomGenerator = new Random();
+        private List<Card> _cards;
+        private static Random _random = new Random();
 
-        public Deck() => Initialize();
+        public Deck() => Init();
 
-        public void Initialize()
+        private void Init()
         {
-            _cards.Clear();
+            _cards = new List<Card>();
 
             for (int i = 0; i < 4; i++)
             {
@@ -51,7 +57,7 @@
         {
             for (int i = _cards.Count - 1; i > 0; i--)
             {
-                int j = _randomGenerator.Next(i + 1);
+                int j = _random.Next(i + 1);
                 (_cards[i], _cards[j]) = (_cards[j], _cards[i]);
             }
         }

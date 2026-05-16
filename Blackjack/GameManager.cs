@@ -1,4 +1,10 @@
-﻿namespace Blackjack
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Blackjack
 {
     public class GameManager
     {
@@ -6,23 +12,20 @@
 
         private static readonly GameManager _instance = new GameManager();
         public static GameManager Instance => _instance;
-        public Deck Deck = new Deck();
-        private Player _currentTurnPlayer { get; set; } = new Player();
-        private List<Player> _players = new List<Player>();
+        public Deck Deck;
+        private Player _currentTurnPlayer { get; set; }
+        private List<Player> _players;
         public bool IsGameEnd;
 
         public void GameStart(Player player1, Player player2)
         {
-            IsGameEnd = false;
-            player1.Cards.Clear();
-            player2.Cards.Clear();
-            Deck.Initialize();
             _currentTurnPlayer = player1;
             _players = new List<Player>
         {
             player1,
             player2
         };
+            Deck = new Deck();
             Deck.Shuffle();
 
             for (int i = 0; i < 2; i++)
@@ -38,7 +41,7 @@
             {
                 Console.WriteLine($"{_currentTurnPlayer.Name} 턴.");
 
-                if (_currentTurnPlayer.Name == "User")
+                if (GameManager.Instance._currentTurnPlayer.Name == "User")
                 {
                     ConsoleKey behavior = Console.ReadKey(true).Key;
 
@@ -52,11 +55,15 @@
                             break;
                     }
                 }
-                else if (_currentTurnPlayer.Name == "Dealer")
+                else if (GameManager.Instance._currentTurnPlayer.Name == "Dealer")
                 {
                     Player dealer = _players.Find(p => p.Name == "Dealer")!;
 
-                    int num = dealer.Score;
+                    int num = 0;
+                    foreach (var card in dealer.Cards)
+                    {
+                        num += card.Value;
+                    }
 
                     if (num >= 17)
                     {
@@ -73,7 +80,17 @@
 
         public void GameEnd()
         {
-            int userScore = _players[0].Score, dealerScore = _players[1].Score;
+            int userScore = 0, dealerScore = 0;
+
+            foreach (var card in _players[0].Cards)
+            {
+                userScore += card.Value;
+            }
+
+            foreach (var card in _players[1].Cards)
+            {
+                dealerScore += card.Value;
+            }
 
             if (userScore > 21)
             {
