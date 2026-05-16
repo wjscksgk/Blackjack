@@ -6,8 +6,8 @@
 
         private static readonly GameManager _instance = new GameManager();
         public static GameManager Instance => _instance;
-        public Deck Deck = null!;
-        private Player _currentTurnPlayer { get; set; } = null!;
+        public Deck Deck = new Deck();
+        private Player? _currentTurnPlayer { get; set; }
         private List<Player> _players = new List<Player>();
         public bool IsGameEnd;
 
@@ -36,9 +36,14 @@
 
             while (!IsGameEnd)
             {
+                if (_currentTurnPlayer is null)
+                {
+                    throw new InvalidOperationException("Current turn player is not initialized.");
+                }
+
                 Console.WriteLine($"{_currentTurnPlayer.Name} 턴.");
 
-                if (GameManager.Instance._currentTurnPlayer.Name == "User")
+                if (_currentTurnPlayer.Name == "User")
                 {
                     ConsoleKey behavior = Console.ReadKey(true).Key;
 
@@ -52,7 +57,7 @@
                             break;
                     }
                 }
-                else if (GameManager.Instance._currentTurnPlayer.Name == "Dealer")
+                else if (_currentTurnPlayer.Name == "Dealer")
                 {
                     Player dealer = _players.Find(p => p.Name == "Dealer")!;
 
