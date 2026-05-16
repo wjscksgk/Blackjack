@@ -5,9 +5,9 @@
         private List<Card> _cards = new List<Card>();
         private static readonly Random _randomGenerator = new Random();
 
-        public Deck() => Reset();
+        public Deck() => Initialize();
 
-        public void Reset()
+        public void Initialize()
         {
             _cards = new List<Card>();
 
