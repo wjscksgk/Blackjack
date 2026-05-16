@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Blackjack
+﻿namespace Blackjack
 {
     public class Deck
     {
-        private List<Card> _cards;
-        private static Random _random = new Random();
+        private List<Card> _cards = new List<Card>();
+        private static readonly Random _random = new Random();
 
         public Deck() => Init();
 

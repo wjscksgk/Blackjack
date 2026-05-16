@@ -1,15 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Blackjack
+﻿namespace Blackjack
 {
     public class Player
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public List<Card> Cards = new List<Card>();
+
+        public int Score
+        {
+            get
+            {
+                int score = Cards.Sum(card => card.Value);
+                int aceCount = Cards.Count(card => card.Rank == "A");
+
+                while (score > 21 && aceCount > 0)
+                {
+                    score -= 10;
+                    aceCount--;
+                }
+
+                return score;
+            }
+        }
 
         public void Hit()
         {
@@ -18,12 +29,7 @@ namespace Blackjack
             Cards.Add(GameManager.Instance.Deck.Draw());
             ShowPlayerCards();
 
-            int score = 0;
-            foreach (var card in Cards)
-            {
-                score += card.Value;
-            }
-            if (score > 21)
+            if (Score > 21)
             {
                 GameManager.Instance.GameEnd();
             }

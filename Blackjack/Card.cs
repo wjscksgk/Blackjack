@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Blackjack
+﻿namespace Blackjack
 {
     public class Card
     {
         public CardSuitEnum Suit { get; set; }
-        public string Rank { get; set; }
+        public string Rank { get; set; } = string.Empty;
         public int Value { get; set; }
     }
 

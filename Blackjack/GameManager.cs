@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Blackjack
+﻿namespace Blackjack
 {
     public class GameManager
     {
@@ -12,13 +6,16 @@ namespace Blackjack
 
         private static readonly GameManager _instance = new GameManager();
         public static GameManager Instance => _instance;
-        public Deck Deck;
-        private Player _currentTurnPlayer { get; set; }
-        private List<Player> _players;
+        public Deck Deck = null!;
+        private Player _currentTurnPlayer { get; set; } = null!;
+        private List<Player> _players = new List<Player>();
         public bool IsGameEnd;
 
         public void GameStart(Player player1, Player player2)
         {
+            IsGameEnd = false;
+            player1.Cards.Clear();
+            player2.Cards.Clear();
             _currentTurnPlayer = player1;
             _players = new List<Player>
         {
@@ -59,11 +56,7 @@ namespace Blackjack
                 {
                     Player dealer = _players.Find(p => p.Name == "Dealer")!;
 
-                    int num = 0;
-                    foreach (var card in dealer.Cards)
-                    {
-                        num += card.Value;
-                    }
+                    int num = dealer.Score;
 
                     if (num >= 17)
                     {
@@ -80,17 +73,7 @@ namespace Blackjack
 
         public void GameEnd()
         {
-            int userScore = 0, dealerScore = 0;
-
-            foreach (var card in _players[0].Cards)
-            {
-                userScore += card.Value;
-            }
-
-            foreach (var card in _players[1].Cards)
-            {
-                dealerScore += card.Value;
-            }
+            int userScore = _players[0].Score, dealerScore = _players[1].Score;
 
             if (userScore > 21)
             {
