@@ -14,6 +14,7 @@
         public void GameStart(Player player1, Player player2)
         {
             IsGameEnd = false;
+            Deck = new Deck();
             player1.Cards.Clear();
             player2.Cards.Clear();
             _currentTurnPlayer = player1;
@@ -22,7 +23,6 @@
             player1,
             player2
         };
-            Deck = new Deck();
             Deck.Shuffle();
 
             for (int i = 0; i < 2; i++)

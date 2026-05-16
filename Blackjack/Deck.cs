@@ -3,7 +3,7 @@
     public class Deck
     {
         private List<Card> _cards = new List<Card>();
-        private static readonly Random RandomGenerator = new Random();
+        private static readonly Random _randomGenerator = new Random();
 
         public Deck() => Init();
 
@@ -51,7 +51,7 @@
         {
             for (int i = _cards.Count - 1; i > 0; i--)
             {
-                int j = RandomGenerator.Next(i + 1);
+                int j = _randomGenerator.Next(i + 1);
                 (_cards[i], _cards[j]) = (_cards[j], _cards[i]);
             }
         }
