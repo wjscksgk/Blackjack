@@ -14,9 +14,9 @@
         public void GameStart(Player player1, Player player2)
         {
             IsGameEnd = false;
-            Deck.Initialize();
             player1.Cards.Clear();
             player2.Cards.Clear();
+            Deck.Initialize();
             _currentTurnPlayer = player1;
             _players = new List<Player>
         {

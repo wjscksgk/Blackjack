@@ -2,14 +2,14 @@
 {
     public class Deck
     {
-        private List<Card> _cards = new List<Card>();
+        private readonly List<Card> _cards = new List<Card>();
         private static readonly Random _randomGenerator = new Random();
 
         public Deck() => Initialize();
 
         public void Initialize()
         {
-            _cards = new List<Card>();
+            _cards.Clear();
 
             for (int i = 0; i < 4; i++)
             {
