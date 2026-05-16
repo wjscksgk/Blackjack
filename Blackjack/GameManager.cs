@@ -7,14 +7,14 @@
         private static readonly GameManager _instance = new GameManager();
         public static GameManager Instance => _instance;
         public Deck Deck = new Deck();
-        private Player? _currentTurnPlayer { get; set; }
+        private Player _currentTurnPlayer { get; set; } = new Player();
         private List<Player> _players = new List<Player>();
         public bool IsGameEnd;
 
         public void GameStart(Player player1, Player player2)
         {
             IsGameEnd = false;
-            Deck = new Deck();
+            Deck.Reset();
             player1.Cards.Clear();
             player2.Cards.Clear();
             _currentTurnPlayer = player1;
@@ -36,11 +36,6 @@
 
             while (!IsGameEnd)
             {
-                if (_currentTurnPlayer is null)
-                {
-                    throw new InvalidOperationException("Current turn player is not initialized.");
-                }
-
                 Console.WriteLine($"{_currentTurnPlayer.Name} 턴.");
 
                 if (_currentTurnPlayer.Name == "User")
